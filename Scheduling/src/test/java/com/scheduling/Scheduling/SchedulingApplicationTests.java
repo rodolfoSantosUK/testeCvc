@@ -3,10 +3,10 @@ package com.scheduling.Scheduling;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class SchedulingApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
