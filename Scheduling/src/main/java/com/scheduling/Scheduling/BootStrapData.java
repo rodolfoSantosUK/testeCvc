@@ -38,9 +38,6 @@ class BootStrapData implements CommandLineRunner {
                 .value(new BigDecimal("3500.85"))
                 .transferDate(LocalDateTime.now()).build());
 
-        System.out.println("teste");
-
-
     }
 
 }
