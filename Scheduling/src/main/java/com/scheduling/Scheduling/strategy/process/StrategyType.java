@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum StrategyType {
 
-    INTRADAY("INTRADAY"), INTERDAY("INTERDAY"), LONG_TERM("LONG_TERM");
+    INTRADAY("INTRADAY"), INTERDAY("INTERDAY"), LONG_TERM("LONG_TERM"), NONE("NONE");
 
     private String strategyType;
 
