@@ -1,5 +1,6 @@
 package com.scheduling.Scheduling.strategy.process;
 
+import com.scheduling.Scheduling.converter.ConverterTranferDtoToTransfer;
 import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.repository.TransferRepository;
@@ -9,24 +10,26 @@ import java.math.BigDecimal;
 
 
 @Service("intradayTransferStrategy")
-public class IntradayTransferStrategyImpl  extends  BaseProcess  {
-
+public class IntradayTransferStrategyImpl extends BaseProcess <Transfer> {
 
     private static final Integer FIXED_RATE = 3;
 
-    public IntradayTransferStrategyImpl(TransferRepository transferRepository) {
-        super(transferRepository);
+    public IntradayTransferStrategyImpl(TransferRepository transferRepository,
+                                        ConverterTranferDtoToTransfer converter) {
+        super(transferRepository, converter);
     }
 
-
     @Override
-    public void process(TransferDto transferDto) {
+    public Transfer process(TransferDto transferDto) {
 
         BigDecimal percent = transferDto.getRate().divide(new BigDecimal(100));
         transferDto.getValue().multiply(percent);
+        transferDto.setRate(transferDto.getValue().multiply(percent));
 
+        Transfer _transfer = (Transfer) converter.apply(transferDto);
 
-        transferRepository.save(new Transfer());
+        transferRepository.save(_transfer);
+        return _transfer;
 
     }
 }

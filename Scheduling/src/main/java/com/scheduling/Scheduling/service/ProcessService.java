@@ -2,8 +2,8 @@ package com.scheduling.Scheduling.service;
 
 import com.scheduling.Scheduling.dto.TransferDto;
 
-public interface ProcessService {
+public interface ProcessService <T> {
 
-    void process(TransferDto transferDto);
+    T process(TransferDto transferDto);
 
 }

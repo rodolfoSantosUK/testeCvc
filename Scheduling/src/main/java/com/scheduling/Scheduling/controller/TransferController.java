@@ -4,6 +4,7 @@ import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.service.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +20,12 @@ public class TransferController {
 
 
     @PostMapping
-    public ResponseEntity<TransferDto> schedule(@RequestBody TransferDto transferDto ) {
+    public ResponseEntity<Transfer> schedule(@RequestBody TransferDto transferDto ) {
 
-        processService.process(transferDto);
 
-       return null; // ResponseEntity.ok();
+
+        return new ResponseEntity(processService.process(transferDto) , HttpStatus.CREATED);
+
 
     }
 

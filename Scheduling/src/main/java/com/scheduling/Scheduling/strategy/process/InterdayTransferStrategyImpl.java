@@ -5,12 +5,12 @@ import com.scheduling.Scheduling.dto.TransferDto;
 import org.springframework.stereotype.Service;
 
 @Service("interdayTransferStrategy")
-public class InterdayTransferStrategyImpl implements ProcessStrategy {
+public class InterdayTransferStrategyImpl<Transfer> implements ProcessStrategy {
 
     @Override
-    public void process(TransferDto payload) {
+    public Transfer process(TransferDto payload) {
 
-
+ return  null;
 
     }
 }

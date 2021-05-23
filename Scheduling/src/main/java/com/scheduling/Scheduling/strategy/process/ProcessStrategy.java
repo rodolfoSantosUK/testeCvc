@@ -2,8 +2,8 @@ package com.scheduling.Scheduling.strategy.process;
 
 import com.scheduling.Scheduling.dto.TransferDto;
 
-public interface ProcessStrategy {
+public interface ProcessStrategy<T> {
 
-    void process(TransferDto payload);
+    T process(TransferDto payload);
 
 }

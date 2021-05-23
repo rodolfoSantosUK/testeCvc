@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -32,9 +33,9 @@ public class Transfer {
 
     private BigDecimal rate;
 
-    private LocalDateTime transferDate;
+    private LocalDate transferDate;
 
-    private LocalDateTime schedulingDate;
+    private LocalDate schedulingDate;
 
 
 

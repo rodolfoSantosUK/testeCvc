@@ -12,16 +12,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
-public class ProcessServiceImpl implements  ProcessService {
+public class ProcessServiceImpl<Transfer> implements ProcessService {
 
     @Autowired
     private ProcessStrategyFactory factory;
 
     @Override
-    public void process(TransferDto transferDto) {
+    public Transfer process(TransferDto transferDto) {
 
         ProcessStrategy strategy =   factory.geStrategy(getStrategyType(transferDto));
-        strategy.process(transferDto);
+      return (Transfer) strategy.process(transferDto);
 
     }
 

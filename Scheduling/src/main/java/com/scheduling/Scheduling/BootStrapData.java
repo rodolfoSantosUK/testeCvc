@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -26,17 +27,17 @@ class BootStrapData implements CommandLineRunner {
                 .sourceAccount("666667")
                 .destinationAccount("878786")
                 .rate(new BigDecimal("3"))
-                .schedulingDate(LocalDateTime.now().plusMonths(4))
+                .schedulingDate(LocalDate.now().plusMonths(4))
                 .value(new BigDecimal("3500.85"))
-                .transferDate(LocalDateTime.now()).build());
+                .transferDate(LocalDate.now()).build());
 
         transferRepository.save(Transfer.builder()
                 .sourceAccount("333444")
                 .destinationAccount("444333")
                 .rate(new BigDecimal("3"))
-                .schedulingDate(LocalDateTime.now().plusMonths(4))
+                .schedulingDate(LocalDate.now().plusMonths(4))
                 .value(new BigDecimal("3500.85"))
-                .transferDate(LocalDateTime.now()).build());
+                .transferDate(LocalDate.now()).build());
 
     }
 
