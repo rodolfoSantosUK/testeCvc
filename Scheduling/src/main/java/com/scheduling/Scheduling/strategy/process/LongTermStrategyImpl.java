@@ -37,18 +37,16 @@ public class LongTermStrategyImpl extends BaseProcess <Transfer>  {
 
     private BigDecimal getPercent(TransferDto transferDto, BigDecimal percent) {
 
-        if (transferDto.getDaysBetween() > 10 && transferDto.getDaysBetween() < 20) {
+        if (transferDto.getDaysBetween() > 10 && transferDto.getDaysBetween() <=20) {
             percent = ABOVE_10.divide(new BigDecimal(100));
-        } else if( transferDto.getDaysBetween() >=20 && transferDto.getDaysBetween() < 30) {
+        } else if( transferDto.getDaysBetween() >20 && transferDto.getDaysBetween() <=30) {
             percent = ABOVE_20.divide(new BigDecimal(100));
-        } else if ( transferDto.getDaysBetween() >=30 && transferDto.getDaysBetween() < 40) {
+        } else if ( transferDto.getDaysBetween() >30 && transferDto.getDaysBetween() <=40) {
             percent = ABOVE_30.divide(new BigDecimal(100));
-        } else if (transferDto.getDaysBetween() >=40) {
+        } else if (transferDto.getDaysBetween() > 40) {
             percent = ABOVE_40.divide(new BigDecimal(100));
         }
-
         return percent ;
-
     }
 
 }

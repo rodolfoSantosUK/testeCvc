@@ -24,7 +24,7 @@ public class ConverterTranferDtoToTransfer implements Function<TransferDto, Tran
                  .sourceAccount(_tr.getSourceAccount())
                  .destinationAccount(_tr.getDestinationAccount())
                  .value(_tr.getValue())
-                 .rate(_tr.getRate().movePointLeft(2)).build();
+                 .rate(_tr.getRate().setScale(2)).build();
 
     }
 
