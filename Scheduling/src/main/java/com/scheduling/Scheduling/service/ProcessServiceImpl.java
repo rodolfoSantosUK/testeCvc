@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class ProcessServiceImpl<Transfer> implements ProcessService {
@@ -27,11 +28,15 @@ public class ProcessServiceImpl<Transfer> implements ProcessService {
 
     private StrategyType getStrategyType(TransferDto transferDto) {
 
-        LocalDate schedulingDate = LocalDate.parse(transferDto.getTransferDate(), DateUtils.formatter);
+        LocalDate schedulingDate = LocalDate.parse(transferDto.getSchedulingDate(), DateUtils.formatter);
         LocalDate transferDate = LocalDate.parse(transferDto.getTransferDate(), DateUtils.formatter);
+
+        long gapDays = ChronoUnit.DAYS.between(transferDate, schedulingDate);
 
         if (schedulingDate.isEqual(transferDate)) {
             return StrategyType.INTRADAY;
+        } else if(gapDays <= 10 ) {
+            return StrategyType.INTERDAY;
         }
 
         return StrategyType.NONE;
