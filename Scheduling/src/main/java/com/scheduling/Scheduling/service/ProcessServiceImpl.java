@@ -40,6 +40,9 @@ public class ProcessServiceImpl<Transfer> implements ProcessService {
         } else if (null != daysBetween && daysBetween <= 10) {
             transferDto.setDaysBetween(daysBetween);
             return StrategyType.INTERDAY;
+        } else if (null != daysBetween && daysBetween > 10) {
+            transferDto.setDaysBetween(daysBetween);
+            return StrategyType.LONG_TERM;
         }
 
         return StrategyType.NONE;

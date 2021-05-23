@@ -2,7 +2,6 @@ package com.scheduling.Scheduling.strategy.process;
 
 import com.scheduling.Scheduling.converter.ConverterTranferDtoToTransfer;
 import com.scheduling.Scheduling.dto.TransferDto;
-import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.repository.TransferRepository;
 import org.springframework.stereotype.Service;
 

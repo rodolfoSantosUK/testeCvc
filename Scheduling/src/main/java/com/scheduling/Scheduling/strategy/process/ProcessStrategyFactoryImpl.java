@@ -11,7 +11,6 @@ import java.util.Map;
 @Component
 public class ProcessStrategyFactoryImpl implements ProcessStrategyFactory  {
 
-
     @Autowired
     @Qualifier("intradayTransferStrategy")
     private ProcessStrategy intradayTransferStrategy;
