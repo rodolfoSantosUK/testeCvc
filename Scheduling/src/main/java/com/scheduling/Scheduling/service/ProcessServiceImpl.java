@@ -8,6 +8,8 @@ import com.scheduling.Scheduling.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -21,17 +23,23 @@ public class ProcessServiceImpl<Transfer> implements ProcessService {
     public Transfer process(TransferDto transferDto) {
 
         ProcessStrategy strategy =   factory.geStrategy(getStrategyType(transferDto));
+
       return (Transfer) strategy.process(transferDto);
 
     }
 
     private StrategyType getStrategyType(TransferDto transferDto) {
 
-        LocalDate schedulingDate = LocalDate.parse(transferDto.getTransferDate(), DateUtils.formatter);
+        transferDto.setSchedulingDate(LocalDate.now());
         LocalDate transferDate = LocalDate.parse(transferDto.getTransferDate(), DateUtils.formatter);
 
-        if (schedulingDate.isEqual(transferDate)) {
+        Long daysBetween = DAYS.between(transferDto.getSchedulingDate(), transferDate);
+
+        if (transferDto.getSchedulingDate().isEqual(transferDate)) {
             return StrategyType.INTRADAY;
+        } else if (null != daysBetween && daysBetween <= 10) {
+            transferDto.setDaysBetween(daysBetween);
+            return StrategyType.INTERDAY;
         }
 
         return StrategyType.NONE;

@@ -15,13 +15,12 @@ public class ConverterTranferDtoToTransfer implements Function<TransferDto, Tran
     @Override
     public Transfer apply(TransferDto _tr) {
 
-        LocalDate schedulingDate = LocalDate.parse(_tr.getSchedulingDate(), DateUtils.formatter);
         LocalDate transferDate = LocalDate.parse(_tr.getTransferDate(), DateUtils.formatter);
 
-         return Transfer.builder().
-                 transferDate(transferDate)
+         return Transfer.builder()
+                 .transferDate(transferDate)
                  .sourceAccount(_tr.getSourceAccount())
-                 .schedulingDate(schedulingDate)
+                 .schedulingDate(_tr.getSchedulingDate())
                  .sourceAccount(_tr.getSourceAccount())
                  .destinationAccount(_tr.getDestinationAccount())
                  .value(_tr.getValue())

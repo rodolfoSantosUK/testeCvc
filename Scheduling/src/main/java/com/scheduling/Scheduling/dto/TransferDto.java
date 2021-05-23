@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +28,8 @@ public class TransferDto {
 
     private String transferDate;
 
-    private String schedulingDate;
+    private LocalDate schedulingDate;
 
+    private Long daysBetween;
 
 }
