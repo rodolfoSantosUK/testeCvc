@@ -21,12 +21,7 @@ public class TransferController {
 
     @PostMapping
     public ResponseEntity<Transfer> schedule(@RequestBody TransferDto transferDto ) {
-
-
-
         return new ResponseEntity(processService.process(transferDto) , HttpStatus.CREATED);
-
-
     }
 
 }
