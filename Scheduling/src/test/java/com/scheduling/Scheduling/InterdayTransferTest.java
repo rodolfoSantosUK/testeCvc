@@ -5,6 +5,7 @@ import com.scheduling.Scheduling.converter.ConverterTranferDtoToTransfer;
 import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.repository.TransferRepository;
+import com.scheduling.Scheduling.strategy.process.InterdayTransferStrategyImpl;
 import com.scheduling.Scheduling.strategy.process.IntradayTransferStrategyImpl;
 import com.scheduling.Scheduling.utils.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class InterdayTransferTest {
 
-   private IntradayTransferStrategyImpl intradayTransferStrategy;
+   private InterdayTransferStrategyImpl interdayTransfer ;
 
    @Mock
    private TransferRepository transferRepository;
@@ -32,7 +34,7 @@ public class InterdayTransferTest {
     @BeforeEach
     void setUp() {
 
-        intradayTransferStrategy = new IntradayTransferStrategyImpl(transferRepository, converter );
+        interdayTransfer = new InterdayTransferStrategyImpl(transferRepository, converter );
 
     }
 
@@ -42,8 +44,8 @@ public class InterdayTransferTest {
         doReturn(buildTransfer()).when(converter).apply(any(TransferDto.class)) ;
 
         TransferDto transferDto =  buildTransferDto ();
-        intradayTransferStrategy.process(transferDto);
-
+        interdayTransfer.process(transferDto);
+        assertEquals(transferDto.getRate(), new BigDecimal(24.00) );
     }
 
 
@@ -51,23 +53,24 @@ public class InterdayTransferTest {
         return  TransferDto.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("24.00"))
                 .schedulingDate(LocalDate.now())
-                .value(new BigDecimal("3500.85"))
-                .transferDate("2021-05-25").build();
+                .value(new BigDecimal("1000"))
+                .daysBetween(2L)
+                .transferDate("2021-05-26").build();
     }
 
     private Transfer buildTransfer() {
 
-        LocalDate schedulingDate = LocalDate.parse("2021-05-21", DateUtils.formatter);
-        LocalDate transferDate = LocalDate.parse("2021-05-21", DateUtils.formatter);
+        LocalDate schedulingDate = LocalDate.parse("2021-05-24", DateUtils.formatter);
+        LocalDate transferDate = LocalDate.parse("2021-05-26", DateUtils.formatter);
 
         return  Transfer.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("24"))
+                .rate(new BigDecimal("24.00"))
                 .schedulingDate(schedulingDate)
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate(transferDate).build();
     }
 

@@ -5,31 +5,21 @@ import com.scheduling.Scheduling.converter.ConverterTranferDtoToTransfer;
 import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.repository.TransferRepository;
-import com.scheduling.Scheduling.service.ProcessService;
 import com.scheduling.Scheduling.strategy.process.IntradayTransferStrategyImpl;
 import com.scheduling.Scheduling.utils.DateUtils;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class IntradayTransferTest {
@@ -55,7 +45,7 @@ public class IntradayTransferTest {
 
         TransferDto transferDto =  buildTransferDto ();
         intradayTransferStrategy.process(transferDto);
-
+        assertEquals(transferDto.getRate(), new BigDecimal(30.00).setScale(2));
     }
 
 
@@ -63,9 +53,9 @@ public class IntradayTransferTest {
         return  TransferDto.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("30.00"))
                 .schedulingDate(LocalDate.now())
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate("2021-05-21").build();
     }
 
@@ -77,9 +67,9 @@ public class IntradayTransferTest {
         return  Transfer.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("30.00"))
                 .schedulingDate(schedulingDate)
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate(transferDate).build();
     }
 

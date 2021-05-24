@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Service("intradayTransferStrategy")
 public class IntradayTransferStrategyImpl extends BaseProcess <Transfer> {
 
-    private static final Integer FIXED_RATE = 3;
+    private static final BigDecimal FIXED_RATE = new BigDecimal(3);
 
     public IntradayTransferStrategyImpl(TransferRepository transferRepository,
                                         ConverterTranferDtoToTransfer converter) {
@@ -22,7 +22,7 @@ public class IntradayTransferStrategyImpl extends BaseProcess <Transfer> {
     @Override
     public Transfer process(TransferDto transferDto) {
 
-        BigDecimal percent = transferDto.getRate().divide(new BigDecimal(100));
+        BigDecimal percent = FIXED_RATE.divide(new BigDecimal(100));
         transferDto.getValue().multiply(percent);
         transferDto.setRate(transferDto.getValue().multiply(percent));
 

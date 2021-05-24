@@ -25,7 +25,7 @@ public class LongTermStrategyImpl extends BaseProcess <Transfer>  {
     @Override
     public Transfer process(TransferDto transferDto)  {
 
-        if(transferDto.getDaysBetween() > 40 && transferDto.getValue().compareTo(new BigDecimal("100.000")) == -1 ) {
+        if(!(transferDto.getDaysBetween() > 40 && transferDto.getValue().compareTo(new BigDecimal("100.000")) == -1) ) {
             BigDecimal percent = BigDecimal.ZERO;
             transferDto.setRate(transferDto.getValue().multiply(getPercent(transferDto, percent)));
 

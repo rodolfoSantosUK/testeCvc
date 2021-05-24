@@ -26,17 +26,17 @@ class BootStrapData implements CommandLineRunner {
         transferRepository.save(Transfer.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("60"))
                 .schedulingDate(LocalDate.now().plusMonths(4))
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("2000"))
                 .transferDate(LocalDate.now()).build());
 
         transferRepository.save(Transfer.builder()
                 .sourceAccount("333444")
                 .destinationAccount("444333")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("30.00"))
                 .schedulingDate(LocalDate.now().plusMonths(4))
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate(LocalDate.now()).build());
 
     }

@@ -6,6 +6,7 @@ import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
 import com.scheduling.Scheduling.repository.TransferRepository;
 import com.scheduling.Scheduling.strategy.process.IntradayTransferStrategyImpl;
+import com.scheduling.Scheduling.strategy.process.LongTermStrategyImpl;
 import com.scheduling.Scheduling.utils.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class LongTermTransferTest {
 
-   private IntradayTransferStrategyImpl intradayTransferStrategy;
+   private LongTermStrategyImpl longTermStrategy;
 
    @Mock
    private TransferRepository transferRepository;
@@ -32,28 +34,54 @@ public class LongTermTransferTest {
     @BeforeEach
     void setUp() {
 
-        intradayTransferStrategy = new IntradayTransferStrategyImpl(transferRepository, converter );
+        longTermStrategy = new LongTermStrategyImpl(transferRepository, converter );
 
     }
 
     @Test
-    void testScheduleLongTerm() {
-
+    void testScheduleAbove10Days() {
         doReturn(buildTransfer()).when(converter).apply(any(TransferDto.class)) ;
-
         TransferDto transferDto =  buildTransferDto ();
-        intradayTransferStrategy.process(transferDto);
-
+        longTermStrategy.process(transferDto);
+        assertEquals(transferDto.getRate(), new BigDecimal(80.00).setScale(2));
     }
 
+    @Test
+    void testScheduleAbove20Days() {
+        doReturn(buildTransfer()).when(converter).apply(any(TransferDto.class)) ;
+        TransferDto transferDto =  buildTransferDto ();
+        transferDto.setDaysBetween(21L);
+        longTermStrategy.process(transferDto);
+        assertEquals(transferDto.getRate(), new BigDecimal(60.00).setScale(2));
+    }
+
+    @Test
+    void testScheduleAbove30Days() {
+        doReturn(buildTransfer()).when(converter).apply(any(TransferDto.class)) ;
+        TransferDto transferDto =  buildTransferDto ();
+        transferDto.setDaysBetween(31L);
+        longTermStrategy.process(transferDto);
+        assertEquals(transferDto.getRate(), new BigDecimal(40.00).setScale(2));
+    }
+
+    @Test
+    void testScheduleAbove40Days() {
+        doReturn(buildTransfer()).when(converter).apply(any(TransferDto.class)) ;
+        TransferDto transferDto =  buildTransferDto ();
+        transferDto.setDaysBetween(41L);
+        transferDto.setValue(new BigDecimal("100000"));
+        longTermStrategy.process(transferDto);
+        assertEquals(transferDto.getRate(), new BigDecimal(2000.00).setScale(2));
+    }
 
     private TransferDto buildTransferDto () {
         return  TransferDto.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("3"))
+                .rate(new BigDecimal("80"))
+                .daysBetween(11L)
                 .schedulingDate(LocalDate.now())
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate("2021-06-03").build();
     }
 
@@ -65,9 +93,9 @@ public class LongTermTransferTest {
         return  Transfer.builder()
                 .sourceAccount("666667")
                 .destinationAccount("878786")
-                .rate(new BigDecimal("24"))
+                .rate(new BigDecimal("80"))
                 .schedulingDate(schedulingDate)
-                .value(new BigDecimal("3500.85"))
+                .value(new BigDecimal("1000"))
                 .transferDate(transferDate).build();
     }
 
