@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cd7ce1d6-8a8d-456c-9c2f-8ee8162f0fcc",
+		"_postman_id": "40d817da-13f6-4250-a318-c37a5e075019",
 		"name": "Desafio",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,10 +8,28 @@
 		{
 			"name": "Post transfer",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n   \"sourceAccount\":\"989898\",\n   \"destinationAccount\":\"432432\",\n   \"value\":\"1000\",\n   \"transferDate\":\"2021-05-24\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:7777/api/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"transfer"
+					]
 				}
 			},
 			"response": []
@@ -22,7 +40,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:7777/api/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"transfer"
+					]
 				}
 			},
 			"response": []
