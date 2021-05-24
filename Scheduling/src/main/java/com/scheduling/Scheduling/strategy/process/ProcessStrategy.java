@@ -4,6 +4,6 @@ import com.scheduling.Scheduling.dto.TransferDto;
 
 public interface ProcessStrategy<T> {
 
-    T process(TransferDto payload);
+    T process(TransferDto payload)  ;
 
 }

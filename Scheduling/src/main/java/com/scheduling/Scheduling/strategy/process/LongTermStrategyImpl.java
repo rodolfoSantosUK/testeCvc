@@ -3,6 +3,7 @@ package com.scheduling.Scheduling.strategy.process;
 import com.scheduling.Scheduling.converter.ConverterTranferDtoToTransfer;
 import com.scheduling.Scheduling.dto.TransferDto;
 import com.scheduling.Scheduling.entities.Transfer;
+import com.scheduling.Scheduling.exception.TransferException;
 import com.scheduling.Scheduling.repository.TransferRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +23,20 @@ public class LongTermStrategyImpl extends BaseProcess <Transfer>  {
     }
 
     @Override
-    public Transfer process(TransferDto transferDto) {
+    public Transfer process(TransferDto transferDto)  {
 
-        BigDecimal percent =  BigDecimal.ZERO;
-        transferDto.setRate(transferDto.getValue().multiply(getPercent(transferDto, percent)));
+        if(transferDto.getDaysBetween() > 40 && transferDto.getValue().compareTo(new BigDecimal("100.000")) == -1 ) {
+            BigDecimal percent = BigDecimal.ZERO;
+            transferDto.setRate(transferDto.getValue().multiply(getPercent(transferDto, percent)));
 
-        Transfer _transfer = (Transfer) converter.apply(transferDto);
+            Transfer _transfer = (Transfer) converter.apply(transferDto);
 
-        transferRepository.save(_transfer);
-        return _transfer;
+            transferRepository.save(_transfer);
 
+            return _transfer;
+        } else {
+            throw new TransferException("The fee is not applicable" );
+        }
     }
 
 

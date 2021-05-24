@@ -4,6 +4,6 @@ import com.scheduling.Scheduling.dto.TransferDto;
 
 public interface ProcessService <T> {
 
-    T process(TransferDto transferDto);
+    T process(TransferDto transferDto) ;
 
 }

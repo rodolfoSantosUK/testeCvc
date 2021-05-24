@@ -20,7 +20,7 @@ public class ProcessServiceImpl<Transfer> implements ProcessService {
     private ProcessStrategyFactory factory;
 
     @Override
-    public Transfer process(TransferDto transferDto) {
+    public Transfer process(TransferDto transferDto)   {
 
         ProcessStrategy strategy =   factory.geStrategy(getStrategyType(transferDto));
 
